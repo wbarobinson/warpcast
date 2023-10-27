@@ -29,7 +29,8 @@ def follow_user_by_username(username, client):
         print(f"Failed to follow user with username {username}: {str(e)}")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
     mnemonic = input("Please enter your mnemonic (just the 12 words with spaces between them): ")
 
     client = Warpcast(mnemonic=mnemonic)
