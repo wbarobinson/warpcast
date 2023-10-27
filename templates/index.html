@@ -3,6 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Your App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="text"], input[type="password"], input[type="submit"] {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type="submit"] {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+        ul {
+            list-style-type: none;
+        }
+        li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
     <h1>Farcaster Follower</h1>
@@ -10,7 +42,7 @@
     <p>Before proceeding, make sure to add your Farcaster ID to this <a href="https://docs.google.com/spreadsheets/d/1CUCgxhy1OnJzU_kwLy15T_NQHTaui8phxASpy_YYnq0/edit#gid=204458638" target="_blank">spreadsheet</a>.</p>
     <p>Please enter your Farcaster mnemonic below (you can find it in the advanced settings of the mobile app).</p>
     <form method="post">
-        Mnemonic: <input type="text" name="mnemonic"><br>
+        Mnemonic: <input type="password" name="mnemonic"><br>
         <input type="submit" value="Follow Users">
     </form>
     {% if logs %}
@@ -20,6 +52,6 @@
         <li>{{ log }}</li>
     {% endfor %}
     </ul>
-{% endif %}
+    {% endif %}
 </body>
 </html>
