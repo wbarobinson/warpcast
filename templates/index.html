@@ -10,5 +10,13 @@
         Mnemonic: <input type="text" name="mnemonic"><br>
         <input type="submit" value="Follow Users">
     </form>
+    {% if logs %}
+    <h2>Logs:</h2>
+    <ul>
+    {% for log in logs %}
+        <li>{{ log }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
 </body>
 </html>

@@ -20,28 +20,32 @@ def follow_user_by_username(username, client):
     except Exception as e:
         return f"Failed to follow user with username {username}: {str(e)}"
 
+
+@app.route("/", methods=["GET", "POST"])
 @app.route("/", methods=["GET", "POST"])
 def index():
+    log_messages = []
     if request.method == "POST":
         mnemonic = request.form['mnemonic']
         client = Warpcast(mnemonic=mnemonic)
         google_sheet_url = 'https://docs.google.com/spreadsheets/d/1CUCgxhy1OnJzU_kwLy15T_NQHTaui8phxASpy_YYnq0/export?format=csv'
         data = pd.read_csv(google_sheet_url)
 
-        results = []
         for _, row in data.iterrows():
             fid = row['Farcaster ID']
             username = row['Farcaster Name']
             
             if pd.notna(fid):
-                result = follow_user_by_id(int(fid), client)
-                results.append(result)
+                message = follow_user_by_id(int(fid), client)
+                log_messages.append(message)
             elif pd.notna(username):
-                result = follow_user_by_username(username, client)
-                results.append(result)
+                message = follow_user_by_username(username, client)
+                log_messages.append(message)
 
-        return render_template("index.html", results=results)
-    return render_template("index.html", results=None)
+        log_messages.append(client.get_healthcheck())
+        return render_template("index.html", result="Operation completed.", logs=log_messages)
+
+    return render_template("index.html", result=None, logs=[])
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
