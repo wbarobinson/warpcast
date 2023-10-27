@@ -1,5 +1,17 @@
+
+from flask import Flask, render_template, request
 import pandas as pd
 from farcaster import Warpcast
+
+app = Flask(__name__)
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        mnemonic = request.form['mnemonic']
+        # Your existing code here...
+        return render_template("index.html", result="Operation completed.")
+    return render_template("index.html", result=None)
+
 
 def follow_user_by_id(fid, client):
     try:
@@ -17,6 +29,7 @@ def follow_user_by_username(username, client):
         print(f"Failed to follow user with username {username}: {str(e)}")
 
 if __name__ == "__main__":
+    app.run(debug=True)
     mnemonic = input("Please enter your mnemonic (just the 12 words with spaces between them): ")
 
     client = Warpcast(mnemonic=mnemonic)
